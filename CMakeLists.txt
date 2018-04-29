@@ -8,7 +8,7 @@ find_package(GSL REQUIRED)
 #SET( GSL_C_FLAGS $(gsl-config --cflags))
 #SET( GSL_LIB_FLAGS $(gsl-config --libs))
 
-SET( DEFAULT_FLAGS "-Wall -ldl -lm")
+SET( DEFAULT_FLAGS "-Wall")
 
 SET( CMAKE_C_FLAGS ${DEFAULT_FLAGS} ${GSL_C_FLAGS})
 SET( CMAKE_VERBOSE_MAKEFILE on)
@@ -17,4 +17,6 @@ SET( CMAKE_VERBOSE_MAKEFILE on)
 SET (SOURCE_FILES newton-raphson.c)
 
 add_executable(newton-raphson ${SOURCE_FILES})
+target_link_libraries(newton-raphson m)
+#target_link_libraries(newton_raphson dl)
 target_link_libraries(newton-raphson GSL::gsl GSL::gslcblas)
