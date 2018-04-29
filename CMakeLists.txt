@@ -8,7 +8,7 @@ find_package(GSL REQUIRED)
 #SET( GSL_C_FLAGS $(gsl-config --cflags))
 #SET( GSL_LIB_FLAGS $(gsl-config --libs))
 
-SET( DEFAULT_FLAGS "-Wall")
+SET( DEFAULT_FLAGS "-Wall -ldl -lm")
 
 SET( CMAKE_C_FLAGS ${DEFAULT_FLAGS} ${GSL_C_FLAGS})
 SET( CMAKE_VERBOSE_MAKEFILE on)
