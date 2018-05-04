@@ -3,7 +3,8 @@
 #include <gsl/gsl_vector.h>
 
 
-struct powell_params {
+struct powell_params 
+{
 	double A;
 
 } powell_params;
