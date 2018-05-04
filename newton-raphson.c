@@ -1,118 +1,27 @@
 #include <stdio.h>
+#include <string.h>
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-struct powell_params { double A; };
+#include "powell.c"
+#include "rosenbrock.c"
+#include "tools.c"
 
-int powell_f (const gsl_vector * x, void * p, gsl_vector * f) {
-	struct powell_params * params = (struct powell_params *)p;
-	const double A = (params->A);
-	const double x0 = gsl_vector_get(x,0);
-	const double x1 = gsl_vector_get(x,1);
-
-	gsl_vector_set (f, 0, A * x0 * x1 - 1);
-	gsl_vector_set (f, 1, (exp(-x0) + exp(-x1) - (1.0 + 1.0/A)));
-	return GSL_SUCCESS;
-}
-
-int powell_df (const gsl_vector *x, void * p, gsl_matrix * J) {
-	const double x0 = gsl_vector_get(x,0);
-	const double x1 = gsl_vector_get(x,1);
-	struct powell_params * params = (struct powell_params *) p;
-	const double A = (params->A);
-	gsl_matrix_set(J,0,0, A*x1);
-	gsl_matrix_set(J,0,1, A*x0);
-	gsl_matrix_set(J,1,0, -exp(-x0));
-	gsl_matrix_set(J,1,1, -exp(-x1));
-	return GSL_SUCCESS;
-}
-
-int powell_fdf (const gsl_vector *x, void *p, gsl_vector * f, gsl_matrix * J) {
-	struct powell_params * params = (struct powell_params *) p;
-	const double A = (params->A);
-	const double x0 = gsl_vector_get(x,0);
-	const double x1 = gsl_vector_get(x,1);
-
-	const double u0 = exp(-x0);
-	const double u1 = exp(-x1);
-
-	gsl_vector_set (f, 0, A * x0 * x1 - 1);
-	gsl_vector_set (f, 1, u0 + u1 - (1 + 1/A));
-
-	gsl_matrix_set (J, 0, 0, A * x1);
-	gsl_matrix_set (J, 0, 1, A * x0);
-	gsl_matrix_set (J, 1, 0, -u0);
-	gsl_matrix_set (J, 1, 1, -u1);
-	return GSL_SUCCESS;
-}
-
-struct rparams
+int run_rosenbrock(const gsl_multiroot_fsolver_type *T, double * x_init, struct rosenbrock_params p)
 {
-	double a;
-	double b;
-};
-
-int rosenbrock_f (const gsl_vector * x, void * params, gsl_vector * f)
-{
-	double a = ((struct rparams *) params)->a;
-        double b = ((struct rparams *) params)->b;
-
-	const double x0 = gsl_vector_get(x,0);
-	const double x1 = gsl_vector_get(x,1);
-
-	const double y0 = a * (1 - x0);
-	const double y1 = b* (x1-x0 *x0);
-
-	gsl_vector_set(f,0,y0);
-	gsl_vector_set(f,1,y1);
-
-	return GSL_SUCCESS;
-}
-
-int print_state_f(size_t iter, gsl_multiroot_fsolver * s)
-{
-	printf("iter = %zu  x = % .3f % .3f "
-	       "f(s) = % .3e % .3e\n",
-	       iter,
-	       gsl_vector_get(s->x,0),
-	       gsl_vector_get(s->x,1),
-	       gsl_vector_get(s->f,0),
-	       gsl_vector_get(s->f,1));
-	return 0;
-}
-
-int print_state_fdf(size_t iter, gsl_multiroot_fdfsolver *s)
-{
-	
-	printf("iter = %zu  x = % .3f % .3f "
-	       "f(s) = % .3e % .3e\n",
-	       iter,
-	       gsl_vector_get(s->x,0),
-	       gsl_vector_get(s->x,1),
-	       gsl_vector_get(s->f,0),
-	       gsl_vector_get(s->f,1));
-	return 0;
-}
-
-int run_rosenbrock(void)
-{
-	const gsl_multiroot_fsolver_type *T;
 	gsl_multiroot_fsolver *s;
 
 	int status;
 	size_t iter = 0;
 
 	const size_t n =2;
-	struct rparams p = {1.0,10};
 	gsl_multiroot_function f = {&rosenbrock_f, n, &p};
 
-	double x_init[2] = {-10.0, -5.0};
 	gsl_vector *x = gsl_vector_alloc (n);
 
 	gsl_vector_set(x, 0, x_init[0]);
 	gsl_vector_set(x,1, x_init[1]);
 
-	T = gsl_multiroot_fsolver_dnewton;
 	s = gsl_multiroot_fsolver_alloc (T,2);
 	gsl_multiroot_fsolver_set(s, &f,x);
 
@@ -141,27 +50,21 @@ int run_rosenbrock(void)
 	return 0;
 }
 
-int main(void) 
+int run_powell(const gsl_multiroot_fdfsolver_type *T, double  * x_init, struct powell_params pw)
 {
-/*	run_rosenbrock();
-*/
 	int status;
 	size_t iter=0;
 
-	const gsl_multiroot_fdfsolver_type *T;
 	gsl_multiroot_fdfsolver *s;
 
 	const size_t n = 2;
-	struct powell_params pw = {10000};
 	gsl_multiroot_function_fdf f = {&powell_f,&powell_df,&powell_fdf, n, &pw};
 
-	double x_init[2] = {-10.0,5.0};
 	gsl_vector *x = gsl_vector_alloc(n);
 
 	gsl_vector_set(x,0,x_init[0]);
 	gsl_vector_set(x,1,x_init[1]);
 
-	T = gsl_multiroot_fdfsolver_newton;
 	s = gsl_multiroot_fdfsolver_alloc(T,2);
 	gsl_multiroot_fdfsolver_set(s,&f,x);
 	
@@ -188,5 +91,30 @@ int main(void)
 	gsl_vector_free(x);
 		
 	return 0;
+}
+
+int main(int argc, char *argv[]) 
+{
+	double x_init_rosenbrock[2] = {-10.0,-5.0};
+	double x_init_powell[2] = {10.0,-20.0};
+	struct rosenbrock_params p_rosenbrock = {.a=1.0, .b=10};
+	struct powell_params p_powell = {.A=10000};
+	
+	if (argc==2 && strcmp(argv[1],"0") == 0 )
+	{
+		printf("Running Rosenbrock with the GSL newton solver!\n");
+		run_rosenbrock(gsl_multiroot_fsolver_dnewton,x_init_rosenbrock, p_rosenbrock);
+
+		printf("Running Powell with the GSL newton solver!\n");
+		run_powell(gsl_multiroot_fdfsolver_newton,x_init_powell,  p_powell);
+	}
+	else if (argc == 2 && strcmp(argv[1], "1") == 0)
+	{
+		printf("Running Rosenbrock with the custom newton solver!\n");
+		run_rosenbrock(gsl_multiroot_fsolver_dnewton,x_init_rosenbrock, p_rosenbrock);
+
+		printf("Running Powell with the custom newton solver!\n");
+		run_powell(gsl_multiroot_fdfsolver_newton,x_init_powell,p_powell);
+	}
 
 }
