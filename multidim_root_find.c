@@ -221,15 +221,15 @@ int main(int argc, char *argv[])
 		printf("Running Rosenbrock with the custom newton solver!\n");
 		run_rosenbrock(gsl_multiroot_fsolver_newton_custom_f,x_init_rosenbrock, p_rosenbrock);
 
-//		printf("Running Powell with the custom newton solver!\n");
-//		run_powell(gsl_multiroot_fdfsolver_newton_custom_fdf,x_init_powell,p_powell);
+		printf("Running Powell with the custom newton solver!\n");
+		run_powell(gsl_multiroot_fdfsolver_newton_custom_fdf,x_init_powell,p_powell);
 	
 		printf("Running Five with the custom newton solver!\n");
 		run_five_f(gsl_multiroot_fsolver_newton_custom_f,x_init_five_f, p_five_f);
 	
 	
-//		printf("Running Five with the custom newton solver, with derivative!\n");
-//		run_five_fdf(gsl_multiroot_fdfsolver_newton_custom,x_init_five_f,p_five_f);	
+		printf("Running Five with the custom newton solver, with derivative!\n");
+		run_five_fdf(gsl_multiroot_fdfsolver_newton_custom_fdf,x_init_five_f,p_five_f);	
 	}
 
 }
