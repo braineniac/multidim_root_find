@@ -1,6 +1,12 @@
 project (multidim_root_find)
 
-SET(CMAKE_C_COMPILER /bin/clang)
+if (CMAKE_CXX_COMPILER_ID MATCHES "[cC][lL][aA][nN][gG]") #Case insensitive match
+    set(IS_CLANG_BUILD true)
+else ()
+    set(IS_CLANG_BUILD false)
+endif ()
+
+#SET(CMAKE_C_COMPILER /bin/clang)
 
 cmake_minimum_required (VERSION 2.6)
 find_package(GSL REQUIRED)
