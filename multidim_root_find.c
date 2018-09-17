@@ -3,14 +3,20 @@
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-#include "powell.c"
-#include "rosenbrock.c"
+#include "powell/powell.c"
+#include "rosenbrock/rosenbrock.c"
+
 #include "tools.c"
-#include "five.c"
+
+#include "five/five_lin.c"
+#include "five/five_sq.c"
+#include "five/five_trig.c"
+#include "five/five_exp.c"
+
 #include "multidim_root_find.h"
 
-#include "newton_custom_f.c"
-#include "newton_custom_fdf.c"
+#include "solvers/newton_custom_f.c"
+#include "solvers/newton_custom_fdf.c"
 
 int run_rosenbrock(const gsl_multiroot_fsolver_type *T, double * x_init, struct rosenbrock_params p)
 {
