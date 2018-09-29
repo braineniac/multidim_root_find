@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
-#include "five.h"
 
 int five_trig_f (const gsl_vector * x, void * params, gsl_vector * f) 
 {

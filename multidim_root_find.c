@@ -8,6 +8,7 @@
 
 #include "tools.c"
 
+#include "five/five.h"
 #include "five/five_lin.c"
 #include "five/five_sq.c"
 #include "five/five_trig.c"
@@ -61,7 +62,7 @@ int run_rosenbrock(const gsl_multiroot_fsolver_type *T, double * x_init, struct 
 	return 0;
 }
 
-int run_five_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct five_params p)
+int run_five_lin_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct five_params p)
 {
 	gsl_multiroot_fsolver *s;
 	
@@ -69,7 +70,7 @@ int run_five_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct five
 	size_t iter = 0;
 	
 	const size_t n = 5;
-	gsl_multiroot_function f = {&five_f, n, &p};
+	gsl_multiroot_function f = {&five_lin_f, n, &p};
 	
 	gsl_vector *x = gsl_vector_alloc (n);
 
