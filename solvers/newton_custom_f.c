@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_linalg.h>
-#include "newton_custom_f.h"
 
 static int newton_custom_f_alloc (void * vstate, size_t n)
 {

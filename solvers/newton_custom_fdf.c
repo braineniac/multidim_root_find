@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_linalg.h>
-#include "newton_custom_fdf.h"
 	
 static int newton_custom_fdf_alloc (void * vstate, size_t n)
 {
@@ -32,11 +31,11 @@ static int newton_custom_fdf_alloc (void * vstate, size_t n)
 
 static int newton_custom_fdf_set (void * vstate, gsl_multiroot_function_fdf * FDF, gsl_vector * x, gsl_vector * f, gsl_matrix * J, gsl_vector * dx)
 {
-	//newton_custom_state_fdf_t * state = (newton_custom_state_fdf_t *) vstate;
+	newton_custom_state_fdf_t * state = (newton_custom_state_fdf_t *) vstate;
 	
 	size_t i, n = FDF->n ;
 	
-	//state = 0 ; /* avoid warnings about unused parameters */
+	state = 0 ; /* avoid warnings about unused parameters */
 	
 	GSL_MULTIROOT_FN_EVAL_F_DF (FDF, x, f, J);
 	
