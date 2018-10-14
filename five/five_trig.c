@@ -115,9 +115,9 @@ int five_trig_f (const gsl_vector * x, void * params, gsl_vector * f)
 
 	const double y0 = c*cos(x1) + b*x0 + d*x3 + e*x4;
 	const double y1 = b*x1 - d*x4 + e*x3;
-	const double y2 = a*x0 - b*x3 - x2;
-	const double y3 = b*d*x4 - c*x2;
-	const double y4 = a*e*x0 - b*x3;
+	const double y2 = a*x0 - b*x3 + x2;
+	const double y3 = b*d*x4 + c*x2;
+	const double y4 = a*e*x0 + b*x3;
 
 	gsl_vector_set(f,0,y0);
 	gsl_vector_set(f,1,y1);
