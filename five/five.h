@@ -2,8 +2,7 @@
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-struct five_params
-{
+struct five_params {
 	double a;
 	double b;
 	double c;

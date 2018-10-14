@@ -2,8 +2,8 @@
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-int run_rosenbrock(const gsl_multiroot_fsolver_type *T, double * x_init, struct rosenbrock_params p)
-{
+int run_rosenbrock(const gsl_multiroot_fsolver_type *T, double * x_init, struct rosenbrock_params p) {
+	
 	gsl_multiroot_fsolver *s;
 
 	int status;
@@ -22,8 +22,7 @@ int run_rosenbrock(const gsl_multiroot_fsolver_type *T, double * x_init, struct 
 
 	print_state_f(iter,s);
 
-	do
-	{
+	do {
 		iter++;
 		status = gsl_multiroot_fsolver_iterate (s);
 
@@ -46,8 +45,8 @@ int run_rosenbrock(const gsl_multiroot_fsolver_type *T, double * x_init, struct 
 }
 
 
-int rosenbrock_f (const gsl_vector * x, void * params, gsl_vector * f)
-{       
+int rosenbrock_f (const gsl_vector * x, void * params, gsl_vector * f) {       
+	
 	double a = ((struct rosenbrock_params *) params)->a;
 	double b = ((struct rosenbrock_params *) params)->b;
 	

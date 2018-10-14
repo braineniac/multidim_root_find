@@ -2,8 +2,8 @@
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-int run_powell(const gsl_multiroot_fdfsolver_type *T, double  * x_init, struct powell_params pw)
-{
+int run_powell(const gsl_multiroot_fdfsolver_type *T, double  * x_init, struct powell_params pw) {
+	
 	int status;
 	size_t iter=0;
 
@@ -22,8 +22,7 @@ int run_powell(const gsl_multiroot_fdfsolver_type *T, double  * x_init, struct p
 	
 	print_state_fdf(iter,s);
 
-	do
-	{
+	do {
 		iter++;
 		status = gsl_multiroot_fdfsolver_iterate(s);
 
@@ -89,5 +88,3 @@ int powell_fdf (const gsl_vector *x, void *p, gsl_vector * f, gsl_matrix * J) {
 	gsl_matrix_set (J, 1, 1, -u1);
 	return GSL_SUCCESS;
 }
-
-

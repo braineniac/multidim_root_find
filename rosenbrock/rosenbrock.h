@@ -2,8 +2,7 @@
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-struct rosenbrock_params
-{       
+struct rosenbrock_params {       
 	double a;
 	double b;
 

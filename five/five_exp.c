@@ -2,14 +2,14 @@
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-int run_five_exp_fdf(const gsl_multiroot_fdfsolver_type *T, double  * x_init, struct five_params p)
-{
+int run_five_exp_fdf(const gsl_multiroot_fdfsolver_type *T, double  * x_init, struct five_params p) {
+	
 	int status;
-	size_t iter =0;
+	size_t iter = 0;
 
 	gsl_multiroot_fdfsolver *s;
 
-	const size_t n =5;
+	const size_t n = 5;
 
 	gsl_multiroot_function_fdf f = {&five_exp_f,&five_exp_df,&five_exp_fdf,n,&p};
 
@@ -26,8 +26,7 @@ int run_five_exp_fdf(const gsl_multiroot_fdfsolver_type *T, double  * x_init, st
 
 	print_state_five_fdf(iter,s);
 
-	do
-	{
+	do {
 		iter++;
 		status = gsl_multiroot_fdfsolver_iterate(s);
 
@@ -49,8 +48,8 @@ int run_five_exp_fdf(const gsl_multiroot_fdfsolver_type *T, double  * x_init, st
 	return 0;
 }
 
-int run_five_exp_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct five_params p)
-{
+int run_five_exp_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct five_params p) {
+	
 	gsl_multiroot_fsolver *s;
 	
 	int status;
@@ -72,8 +71,7 @@ int run_five_exp_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct 
 
 	print_state_five_f(iter,s);
 
-	do
-	{
+	do {
 		 iter++;
 		 status = gsl_multiroot_fsolver_iterate (s);
 
@@ -98,8 +96,7 @@ int run_five_exp_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct 
 }
 
 
-int five_exp_f (const gsl_vector * x, void * params, gsl_vector * f) 
-{
+int five_exp_f (const gsl_vector * x, void * params, gsl_vector * f) {
 
 	double a = ((struct five_params *) params)->a;
 	double b = ((struct five_params *) params)->b;

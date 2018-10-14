@@ -3,8 +3,8 @@
 #include <gsl/gsl_vector.h>
 #include "tools.h"
 
-int print_state_f(size_t iter, gsl_multiroot_fsolver * s)
-{
+int print_state_f(size_t iter, gsl_multiroot_fsolver * s) {
+	
 	printf("iter = %zu  x = % .3f % .3f "
 			 "f(s) = % .3e % .3e\n",
 			 iter,
@@ -15,8 +15,8 @@ int print_state_f(size_t iter, gsl_multiroot_fsolver * s)
 	return 0;
 }
 
-int print_state_fdf(size_t iter, gsl_multiroot_fdfsolver *s)
-{
+int print_state_fdf(size_t iter, gsl_multiroot_fdfsolver *s) {
+
 	printf("iter = %zu  x = % .3f % .3f "
 			"f(s) = % .3e % .3e\n",
 			iter,
@@ -27,8 +27,8 @@ int print_state_fdf(size_t iter, gsl_multiroot_fdfsolver *s)
 	return 0;
 }
 
-int print_state_five_f(size_t iter, gsl_multiroot_fsolver *s)
-{
+int print_state_five_f(size_t iter, gsl_multiroot_fsolver *s) {
+
 	 printf("iter = %zu  x = % .3f % .3f % .3f % .3f % .3f "
 			 "f(s) = % .3e % .3e % .3f % .3f % .3f\n",
 			 iter,
@@ -45,8 +45,8 @@ int print_state_five_f(size_t iter, gsl_multiroot_fsolver *s)
 	 return 0;
 }
 
-int print_state_five_fdf(size_t iter, gsl_multiroot_fdfsolver *s)
-{
+int print_state_five_fdf(size_t iter, gsl_multiroot_fdfsolver *s) {
+
 	 printf("iter = %zu  x = % .3f % .3f % .3f % .3f % .3f "
 			 "f(s) = % .3e % .3e % .3f % .3f % .3f\n",
 			 iter,

@@ -2,8 +2,8 @@
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-int run_five_sq_fdf(const gsl_multiroot_fdfsolver_type *T, double  * x_init, struct five_params p)
-{
+int run_five_sq_fdf(const gsl_multiroot_fdfsolver_type *T, double  * x_init, struct five_params p) {
+
 	int status;
 	size_t iter =0;
 
@@ -26,8 +26,7 @@ int run_five_sq_fdf(const gsl_multiroot_fdfsolver_type *T, double  * x_init, str
 
 	print_state_five_fdf(iter,s);
 
-	do
-	{
+	do {
 		iter++;
 		status = gsl_multiroot_fdfsolver_iterate(s);
 
@@ -50,8 +49,8 @@ int run_five_sq_fdf(const gsl_multiroot_fdfsolver_type *T, double  * x_init, str
 }
 
 
-int run_five_sq_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct five_params p)
-{
+int run_five_sq_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct five_params p) {
+	
 	gsl_multiroot_fsolver *s;
 	
 	int status;
@@ -99,8 +98,7 @@ int run_five_sq_f(const gsl_multiroot_fsolver_type *T, double * x_init, struct f
 }
 
 
-int five_sq_f (const gsl_vector * x, void * params, gsl_vector * f) 
-{
+int five_sq_f (const gsl_vector * x, void * params, gsl_vector * f) {
 
 	double a = ((struct five_params *) params)->a;
 	double b = ((struct five_params *) params)->b;

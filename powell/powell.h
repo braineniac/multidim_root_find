@@ -2,8 +2,8 @@
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_vector.h>
 
-struct powell_params 
-{
+struct powell_params {
+	
 	double A;
 
 } powell_params;
